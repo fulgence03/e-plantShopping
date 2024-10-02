@@ -3,13 +3,18 @@ import './ProductList.css'
 import CartItem from './CartItem';
 import { addItem } from './CartSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import App from './App';
 function ProductList() {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart]=useState({});
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart.items);
+    const [showApp, setShowApp] = useState(false);
 
+    const handleLinkClick = () => {
+        setShowApp(true);
+    };
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -270,12 +275,13 @@ const handlePlantsClick = (e) => {
 }, [cart]);
 
     return (
+    !showApp ? (
         <div>
              <div className="navbar" style={styleObj}>
             <div className="tag">
                <div className="luxury">
                <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="" />
-               <a href="/" style={{textDecoration:'none'}}>
+               <a href="#" onClick={handleLinkClick} style={{textDecoration:'none'}}>
                         <div>
                     <h3 style={{color:'white'}}>Paradise Nursery</h3>
                     <i style={{color:'white'}}>Where Green Meets Serenity</i>
@@ -312,7 +318,8 @@ const handlePlantsClick = (e) => {
  ) :  (
     <CartItem onContinueShopping={handleContinueShopping}/>
 )}
-    </div>
+    </div> ): (
+    <App /> )
     );
 }
 
